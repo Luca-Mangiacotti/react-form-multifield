@@ -5,18 +5,21 @@ const initialList = [
     author: "Turing",
     content: "bella ragazzi",
     category: "FrontEnd",
+    available: true,
   },
   {
     id: 2,
     author: "Einstein",
     content: "tutto bene?",
     category: "BackEnd",
+    available: true,
   },
   {
     id: 3,
     author: "Newton",
     content: "scrivi codice bene",
     category: "UI/UX",
+    available: true,
   },
 ];
 
@@ -25,6 +28,7 @@ export default function App() {
     author: "",
     content: "",
     category: "Frontend",
+    available: false,
   });
   const [authorList, setAuthorList] = useState(initialList);
   //inserimento funzione per eliminazione di un author dalla lista
@@ -51,6 +55,7 @@ export default function App() {
       author: formData.author,
       content: formData.content,
       category: formData.category,
+      available: formData.available,
     };
 
     console.log(newAuthor);
@@ -61,6 +66,7 @@ export default function App() {
       author: "",
       content: "",
       category: "Frontend",
+      available: false,
     });
     console.log(authorList);
   };
@@ -73,7 +79,13 @@ export default function App() {
         {authorList.map((currentAuthor) => (
           <li key={currentAuthor.id}>
             <strong>{currentAuthor.author}</strong>:{currentAuthor.content} (
-            {currentAuthor.category})
+            {currentAuthor.category}{" "}
+            {currentAuthor.available ? (
+              <u> Disponibile </u>
+            ) : (
+              <u> Non Disponibile </u>
+            )}
+            )
             <button onClick={() => handleDelete(currentAuthor)}>
               &#128465;
             </button>
@@ -113,6 +125,19 @@ export default function App() {
           <option value="BackEnd">BackEnd</option>
           <option value="UI/UX">UI/UX</option>
         </select>
+
+        {/* quando vogliamo utilizzare lo stato di una checkbox accediamo al suo contenuto tramite: event.target.checked 
+        che restituirà un valore booleano*/}
+        <label htmlFor="public">Pubblicato</label>
+        <input
+          id="public"
+          type="checkbox"
+          value={formData.available}
+          onChange={(event) =>
+            handleFormData("available", event.target.checked)
+          }
+        ></input>
+        <br />
 
         <button type="submit"> inserisci autore </button>
       </form>
