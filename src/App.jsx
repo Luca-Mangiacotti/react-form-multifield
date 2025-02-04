@@ -3,21 +3,21 @@ const initialList = [
   {
     id: 1,
     author: "Turing",
-    content: "bella ragazzi",
+    content: "esperto nel campo",
     category: "FrontEnd",
     available: true,
   },
   {
     id: 2,
     author: "Einstein",
-    content: "tutto bene?",
+    content: "insicuro ma con potenziale",
     category: "BackEnd",
     available: true,
   },
   {
     id: 3,
     author: "Newton",
-    content: "scrivi codice bene",
+    content: "copia dai suoi colleghi",
     category: "UI/UX",
     available: true,
   },
@@ -72,75 +72,81 @@ export default function App() {
   };
 
   return (
-    <>
-      <h1>Lista dei programmatori </h1>
+    <section className="container">
+      <div className="listContainer">
+        <h1>Lista dei programmatori </h1>
+        <ul>
+          {authorList.map((currentAuthor) => (
+            <li key={currentAuthor.id}>
+              <span>
+                <strong>{currentAuthor.author}</strong>:{currentAuthor.content}(
+                {currentAuthor.category})
+                {currentAuthor.available ? (
+                  <u> Disponibile </u>
+                ) : (
+                  <u className="notAvaible"> Non Disponibile </u>
+                )}
+              </span>
+              <button onClick={() => handleDelete(currentAuthor)}>
+                &#128465;
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <br />
-      <ul>
-        {authorList.map((currentAuthor) => (
-          <li key={currentAuthor.id}>
-            <strong>{currentAuthor.author}</strong>:{currentAuthor.content} (
-            {currentAuthor.category}{" "}
-            {currentAuthor.available ? (
-              <u> Disponibile </u>
-            ) : (
-              <u> Non Disponibile </u>
-            )}
-            )
-            <button onClick={() => handleDelete(currentAuthor)}>
-              &#128465;
-            </button>
-          </li>
-        ))}
-      </ul>
 
-      <hr />
-      <br />
-      <h2>Inserisci nuovo Autore</h2>
-      <form onSubmit={handleFormSubmit}>
-        <input
-          id="author"
-          type="text"
-          value={formData.author}
-          //con l'evento onChange andiamo a richiamare una funzione che a sua volta chiamerà una funzione che si servirà
-          //dell' oggetto "event" nel quale andrà a recuperare il valore del campo di input
-          onChange={(event) => handleFormData("author", event.target.value)}
-          placeholder="Inserisci nome Autore"
-        />
-        <br />
-        <input
-          id="content"
-          type="text"
-          value={formData.content}
-          onChange={(event) => handleFormData("content", event.target.value)}
-          placeholder="Inserisci contenuto"
-        />
-        <br />
+      <div className="formContainer">
+        <h1>Inserisci nuovo Programmatore</h1>
+        <form onSubmit={handleFormSubmit}>
+          <input
+            id="author"
+            type="text"
+            value={formData.author}
+            //con l'evento onChange andiamo a richiamare una funzione che a sua volta chiamerà una funzione che si servirà
+            //dell' oggetto "event" nel quale andrà a recuperare il valore del campo di input
+            onChange={(event) => handleFormData("author", event.target.value)}
+            placeholder="Inserisci nome Autore"
+          />
+          <br />
+          <input
+            id="content"
+            type="text"
+            value={formData.content}
+            onChange={(event) => handleFormData("content", event.target.value)}
+            placeholder="Inserisci dettagli"
+          />
+          <br />
 
-        <select
-          id="category"
-          value={formData.category}
-          onChange={(event) => handleFormData("category", event.target.value)}
-        >
-          <option value="FrontEnd">FrontEnd</option>
-          <option value="BackEnd">BackEnd</option>
-          <option value="UI/UX">UI/UX</option>
-        </select>
+          <select
+            id="category"
+            value={formData.category}
+            onChange={(event) => handleFormData("category", event.target.value)}
+          >
+            <option value="FrontEnd">FrontEnd</option>
+            <option value="BackEnd">BackEnd</option>
+            <option value="UI/UX">UI/UX</option>
+          </select>
 
-        {/* quando vogliamo utilizzare lo stato di una checkbox accediamo al suo contenuto tramite: event.target.checked 
-        che restituirà un valore booleano*/}
-        <label htmlFor="public">Pubblicato</label>
-        <input
-          id="public"
-          type="checkbox"
-          value={formData.available}
-          onChange={(event) =>
-            handleFormData("available", event.target.checked)
-          }
-        ></input>
-        <br />
+          {/* quando vogliamo utilizzare lo stato di una checkbox accediamo al suo contenuto tramite: event.target.checked 
+              che restituirà un valore booleano*/}
+          <label htmlFor="public">Pubblicato </label>
+          <input
+            id="public"
+            type="checkbox"
+            value={formData.available}
+            onChange={(event) =>
+              handleFormData("available", event.target.checked)
+            }
+          ></input>
+          <br />
 
-        <button type="submit"> inserisci autore </button>
-      </form>
-    </>
+          <button className="subBtn" type="submit">
+            inserisci autore
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }
