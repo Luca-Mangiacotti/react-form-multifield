@@ -135,11 +135,11 @@ export default function App() {
           <input
             id="public"
             type="checkbox"
-            value={formData.available}
+            checked={formData.available}
             onChange={(event) =>
               handleFormData("available", event.target.checked)
             }
-          ></input>
+          />
           <br />
 
           <button className="subBtn" type="submit">
